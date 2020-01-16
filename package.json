@@ -1,0 +1,25 @@
+{
+  "name": "node_assignment",
+  "version": "1.0.0",
+  "description": "node_assignment",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashishrawat7/node_assignment.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ashishrawat7/node_assignment/issues"
+  },
+  "homepage": "https://github.com/ashishrawat7/node_assignment#readme",
+  "dependencies": {
+    "http": "0.0.0",
+    "mongodb": "^3.5.0",
+    "mongoose": "^5.8.7",
+    "querystring": "^0.2.0"
+  }
+}
