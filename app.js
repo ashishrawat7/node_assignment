@@ -67,21 +67,21 @@ const server = http.createServer(async function (req, res) {
             })
         }
         await dbo.collection('users').find({}).toArray(function(err, docs) {
-            var dob = '';
-            var sum = 0;
+            let dob = '';
+            let sum = 0;
             docs.forEach(element => {
-                console.log(element);                
-                var age = '';
+                console.log(element);
+                let age = '';
                 dob = element.profile.dob;
-                age = getAge(dob);                
-                if(age >= 25){                 
+                age = getAge(dob); 
+                console.log(age);               
+                if(age > 25){                 
                     dbo.collection('users').deleteOne({_id: element._id});
-                    dbo.collection('usersProfile').deleteOne({_id: element._id});                               
+                    dbo.collection('usersProfile').deleteOne({_id: element._id});                           
                 }
                 sum = sum + age;                
-            });            
-            console.log(sum/5);
-            res.end('got req. Record saved!<br>'+sum/5);            
+            });
+            res.end('average of age is :'+sum/5);            
         });
     });
 });
