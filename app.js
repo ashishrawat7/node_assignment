@@ -4,7 +4,6 @@ var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/";
 
 const server = http.createServer(async function (req, res) {
-    var print = '';
     function getAge(dateString) {
         var today = new Date();
         var birthDate = new Date(dateString);
@@ -66,22 +65,21 @@ const server = http.createServer(async function (req, res) {
                 mobile_no: element.profile.mobile_no
             })
         }
-        await dbo.collection('users').find({}).toArray(function(err, docs) {
-            let dob = '';
-            let sum = 0;
-            docs.forEach(element => {
-                console.log(element);
-                let age = '';
+        let sum = 0;
+    
+        await dbo.collection('users').find({}).toArray(async function(err, docs) {
+            let dob;            
+            for await (element of docs) {        
+                let age;
                 dob = element.profile.dob;
                 age = getAge(dob); 
-                console.log(age);               
                 if(age > 25){                 
-                    dbo.collection('users').deleteOne({_id: element._id});
-                    dbo.collection('usersProfile').deleteOne({_id: element._id});                           
+                    await dbo.collection('users').deleteOne({_id: element._id});
+                    await dbo.collection('usersProfile').deleteOne({_id: element._id});                           
                 }
-                sum = sum + age;                
-            });
-            res.end('average of age is :'+sum/5);            
+                sum = sum + age;
+            };
+            res.end('average of age is :' + sum/5);            
         });
     });
 });
